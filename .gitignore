@@ -1,0 +1,67 @@
+# ===== Date =====
+# Descarcarile brute si intermediare NU se urca in git (mari, reproductibile).
+# Livrabilele finale din date/output/ SE urca.
+date/raw/*
+!date/raw/.gitkeep
+date/staging/*
+!date/staging/.gitkeep
+
+# Fisiere mari accidentale
+*.zip
+*.7z
+*.rar
+*.gz
+*.bz2
+*.xml
+*.xlsx
+*.sqlite
+*.db
+*.parquet
+
+# Exceptii: exporturi mici pentru API
+!date/output/*.csv
+!date/output/*.json
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# ===== Node (in caz ca apar utilitare) =====
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.pnpm-store/
+
+# ===== Credentiale / mediu =====
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# ===== IDE / OS =====
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+
+# ===== Loguri / temporare =====
+*.log
+*.tmp
+*.bak
+.cache/

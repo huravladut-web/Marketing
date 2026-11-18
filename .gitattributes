@@ -1,0 +1,9 @@
+# Normalizează liniile, indiferent de OS
+* text=auto
+
+# Fișiere care rămân neatinse (binare / date)
+*.png binary
+*.jpg binary
+*.pdf binary
+*.xlsx binary
+*.zip binary
