@@ -1,132 +1,180 @@
-# Radar Economic Galați — Echipa Data Analysis
+# Echipa Data Analysis — GalaBizz
 
-> Proiect master · FEEA Galați · E-Business
-> **Tema 2:** Cele mai profitabile firme din România, ce lipsește în Galați și ce ar avea succes, specificul forței de muncă din Galați. Să verificăm alte orașe.
+> Manualul intern al echipei. Pentru contextul general al proiectului vezi README-ul din rădăcină.
 
 ---
 
-## 1. Despre proiect
+## 1. Context proiect
 
-Proiectul răspunde la trei întrebări, în ordine:
+Proiect master · FEEA Galați · E-Business · **Tema 2**: cele mai profitabile firme din România, ce lipsește în Galați și ce ar avea succes, specificul forței de muncă din Galați, cu verificare pe alte orașe.
 
-1. **Național** — Care sunt cele mai profitabile firme din România și în ce domenii (CAEN) activează?
-2. **Local** — Ce lipsește în Galați raportat la profilul economic național și ce tip de afacere ar avea succes aici, ținând cont de specificul forței de muncă locale?
-3. **Comparativ** — Cum se poziționează Galați față de alte orașe (Iași, Constanța, Brăila, Bacău, Craiova, Cluj, Timișoara etc.)?
+Rezultatul final e o aplicație web (frontend + backend pe API-uri). **Noi producem datele** pe care se sprijină restul.
 
-Produsul final este o aplicație web (frontend + backend pe API-uri) care expune aceste date într-un mod vizual și explorabil.
+---
 
-## 2. Echipele clasei
+## 2. Misiunea echipei
 
-| Echipă | Responsabilitate |
-|---|---|
-| Web design / Frontend | Interfața grafică, vizualizări, UX |
-| Backend | Procesare, arhitectură bazată pe API-uri |
-| Bază de date (opțional) | Stocare, model de date, interogări |
-| **Data Analysis (echipa noastră)** | **Colectare date (scraping, API ANAF etc.), curățare, indicatori, analiză** |
-| Test & QA | Validare flux end-to-end, verificarea corectitudinii datelor |
-| Marketing | Comunicare, prezentare, promovare |
+### Livrăm
 
-## 3. Misiunea echipei noastre
+- Seturi de date curate, documentate și versionate (`date/output/`).
+- Indicatori de profitabilitate și de oportunitate locală.
+- Contractul de date către backend (secțiunea 9).
+- Raport de acoperire + dicționar de date pentru QA.
+- 5–10 concluzii-cheie cu cifre verificabile, pentru marketing și raport.
 
-Producem **datele** pe care se sprijină tot restul proiectului. Concret:
+### NU livrăm
 
-- Colectăm date din surse publice (ANAF/MF, ONRC, INS, Eurostat).
-- Curățăm, normalizăm și validăm datele (CUI, CAEN, localitate, an fiscal).
-- Calculăm indicatorii de profitabilitate și de oportunitate locală.
-- Livrăm un **set de date stabil, documentat și versionat**, plus materialul analitic pentru raportul final.
-- Asigurăm trasabilitatea: fiecare cifră din aplicație trebuie să poată fi urmărită până la sursa primară.
+- UI, design vizual, hosting, infrastructură.
+- Schema bazei de date a aplicației (doar propunem ce câmpuri avem nevoie).
+- Interpretări fără date în spate.
 
-**Nu** ne ocupăm de UI, de infrastructura de hosting sau de design-ul API-ului — dar definim împreună cu backend-ul **contractul de date** (secțiunea 8).
+### Regula de aur
 
-### 3.1 Componența echipei (anonimizat)
+> Fiecare cifră din aplicație trebuie să poată fi urmărită până la sursa primară.
 
-5 membri, identificați prin inițiale:
+---
 
-| Membru | Responsabilitate principală |
-|---|---|
-| **T** | _de completat_ |
-| **A** | _de completat_ |
-| **E** | _de completat_ |
-| **F** | _de completat_ |
-| **R** | _de completat_ |
+## 3. Componența echipei
 
-> Identitățile reale nu se trec în repository. În documentele predate, fiecare membru își asumă contribuția prin inițiala din tabel.
+5 membri, identificați prin inițiale (anonimizat în repository).
 
-## 4. Întrebări de cercetare (ce trebuie să putem răspunde cu date)
-
-| # | Întrebare | Indicator / livrabil |
+| Membru | Rol principal | Etapa deținută |
 |---|---|---|
-| R1 | Top firme profitabile din RO | Top 100/500 după profit net, cu CAEN, județ, cifră de afaceri, marjă |
-| R2 | Ce domenii sunt cele mai profitabile | Profit agregat și marjă mediană pe diviziune CAEN |
-| R3 | Ce lipsește în Galați | Densitate firme pe CAEN (la 1.000 locuitori) vs. benchmark național/urban |
-| R4 | Ce ar avea succes în Galați | Corelație între cerere locală (populație, salarii, importuri) și ofertă existentă |
-| R5 | Specificul forței de muncă | Structura salariaților pe activități, salariu mediu, șomaj, pondere industrie vs. servicii |
-| R6 | Comparație orașe | Clasament multi-criteriu pe orașe comparabile ca mărime |
+| **T** | _de completat_ | _de completat_ |
+| **A** | _de completat_ | _de completat_ |
+| **E** | _de completat_ | _de completat_ |
+| **F** | _de completat_ | _de completat_ |
+| **R** | _de completat_ | _de completat_ |
 
-## 5. Surse de date
+> Identitățile reale nu se trec în repo. Fiecare membru își asumă contribuția prin inițiala din tabel.
 
-| Sursă | Ce obținem | Acces | Status |
+---
+
+## 4. Flux intern de lucru
+
+### Branch-uri
+
+```
+main                  ← doar integrări finale (nu lucrăm direct)
+└── data-analysis     ← branch-ul echipei, integrare continuă
+    ├── data/colectare-<subiect>
+    ├── data/curatare-<subiect>
+    └── data/indicatori-<subiect>
+```
+
+- Lucrăm pe `data-analysis`; sub-task-uri pe branch-uri scurte `data/...`.
+- **Nu** facem push pe `main` și nu atingem branch-ul `frontend`.
+- `data-analysis → main` se face doar la milestone (E3, E6), cu acordul celorlalte echipe.
+
+### Commit-uri
+
+Format: `tip: descriere la prezent`
+
+| Tip | Când |
+|---|---|
+| `feat` | script nou, indicator nou, sursă nouă |
+| `fix` | corectare de calcul, parser, date greșite |
+| `docs` | documentație, dicționar de date |
+| `data` | actualizare livrabile în `date/output/` |
+| `chore` | config, `.gitignore`, structură |
+
+Exemplu: `feat: parser bilanț MF pentru anul 2023`
+
+### Review intern
+
+- Orice script care produce livrabile e citit de încă un membru înainte de merge.
+- Cine modifică formula unui indicator anunță înainte, nu după.
+
+---
+
+## 5. Ce acoperim: întrebările de cercetare
+
+| # | Întrebare | Indicator | Cine |
 |---|---|---|---|
-| **MF / ANAF — situații financiare anuale** | Bilanț, cont profit și pierdere (CA, profit net, active, datorii, salariați) pe CUI/an | Fișiere bulk (XML/CSV) publicate anual | De verificat |
-| **ANAF — date deschise / servicii web** | Date identificare firmă, vector fiscal, TVA, inactivitate | Web services / data.gov.ro | De verificat |
-| **ONRC / data.gov.ro** | Date de identificare, cod CAEN, formă juridică, stare | Bulk / portal open data | De verificat |
-| **INS TEMPO** | Salariați, salariu mediu brut/net pe județ și activitate, șomaj | Interogare online / export | Confirmat |
-| **INS — Recensământ / populație** | Populație stabilă pe localități, structură vârstă | Portal INS | Confirmat |
-| **Eurostat / BNR** | Context macro, comparații regionale | API / bulk | Opțional |
-| **Site-uri agregatoare (listafirme, termene etc.)** | Cross-check, nu sursă primară | Scraping | Doar validare |
+| R1 | Top firme profitabile din RO | profit net, CA, marjă, CAEN, județ | _de completat_ |
+| R2 | Cele mai profitabile domenii | profit agregat + marjă mediană pe diviziune CAEN | _de completat_ |
+| R3 | Ce lipsește în Galați | densitate firme / 1.000 locuitori vs. benchmark | _de completat_ |
+| R4 | Ce ar avea succes în Galați | scor de oportunitate (gap × profitabilitate × forță de muncă) | _de completat_ |
+| R5 | Specificul forței de muncă | structură salariați, salariu mediu, șomaj | _de completat_ |
+| R6 | Comparație orașe | clasament multi-criteriu | _de completat_ |
 
-> ⚠️ Reguli: folosim **surse oficiale** ca sursă de adevăr; agregatoarele comerciale doar pentru verificare încrucișată. Respectăm `robots.txt` și termenii de utilizare. Nu republicăm date personale.
+Orașe benchmark propuse: Iași, Constanța, Brăila, Bacău, Craiova, Cluj-Napoca, Timișoara.
 
-## 6. Metodologie
+---
 
-### 6.1 Indicatori de profitabilitate
+## 6. Surse & unelte
 
-- `profit_net` = rezultatul net al exercițiului financiar
-- `cifra_afaceri` = cifra de afaceri netă
-- `marja_net` = `profit_net / cifra_afaceri` (doar dacă `cifra_afaceri > 0`)
-- `profit_per_angajat` = `profit_net / nr_salariati`
-- `ROA` = `profit_net / total_active`
-- `ROE` = `profit_net / capitaluri_proprii`
-- `crestere_ca` = variație an la an (unde avem 2 ani)
+Inventarul complet, cu status de validare: **[`surse.md`](surse.md)**.
 
-Filtre obligatorii pentru topuri: `cifra_afaceri > 0`, `nr_salariati > 0` (unde e relevant), excluderea firmelor inactive/dizolvate, excluderea valorilor aberante documentate.
+Pe scurt, în ordinea importanței:
+1. **MF/ANAF** — situații financiare anuale (sursa de adevăr).
+2. **ONRC / ANAF** — identificare firmă, CAEN, stare.
+3. **INS TEMPO** — salariați, salarii, șomaj, populație.
+4. Agregatoare comerciale — **doar cross-check**, niciodată sursă primară.
 
-### 6.2 Gap analysis pentru Galați
+Unelte: Python (`requests`, `pandas`, `lxml`), SQL pentru explorare, Jupyter pentru grafice, Git pentru versionare. Fără transformări manuale în Excel.
 
-1. Calculăm **densitatea** firmelor pe fiecare cod CAEN la 1.000 locuitori, pentru Galați.
-2. Calculăm aceeași densitate pentru un **benchmark** (media națională urbană + orașe comparabile).
-3. `gap = densitate_benchmark − densitate_galati`. Gap mare + profitabilitate mare în domeniu ⇒ **oportunitate**.
-4. Ponderăm cu specificul forței de muncă (existența salariaților calificați, salariu mediu, tradiție industrială — Galați = metalurgie, port, construcții navale).
+---
 
-### 6.3 Specificul forței de muncă Galați
+## 7. Metodologie & formule
 
-- Structura salariaților pe secțiuni CAEN (industrie prelucrătoare, construcții, comerț, servicii).
-- Salariu mediu brut/net vs. media națională și pe orașe comparabile.
-- Rată șomaj, populație activă, navetism (dacă avem date).
-- Concluzie: **ce tip de afacere se potrivește** cu forța de muncă existentă (ex. procesare, logistică/port, servicii pentru industrie, IT unde există masă critică).
+### Profitabilitate
 
-## 7. Pipeline de date
+| Indicator | Formulă | Condiție |
+|---|---|---|
+| `marja_net` | `profit_net / cifra_afaceri` | `cifra_afaceri > 0` |
+| `profit_per_angajat` | `profit_net / nr_salariati` | `nr_salariati > 0` |
+| `ROA` | `profit_net / total_active` | `total_active > 0` |
+| `ROE` | `profit_net / capitaluri_proprii` | `capitaluri_proprii > 0` |
+| `crestere_ca` | `(CA_an − CA_an-1) / CA_an-1` | doi ani disponibili |
+
+Filtre obligatorii pentru topuri: firmă activă, `cifra_afaceri > 0`, excluderea valorilor aberante documentate. Firmele fără bilanț depus = `null`, **nu** zero.
+
+### Gap analysis Galați
+
+```
+densitate = nr_firme_caen / populatie * 1000
+gap       = densitate_benchmark − densitate_galati
+oportunitate = gap_normalizat × marja_medie_caen × factor_forta_munca
+```
+
+1. Densitate pe cod CAEN, la 1.000 locuitori, pentru Galați.
+2. Aceeași densitate pentru benchmark (media urbană + orașe comparabile).
+3. Gap mare + domeniu profitabil + forță de muncă disponibilă ⇒ **oportunitate**.
+
+### Specificul forței de muncă
+
+- Structura salariaților pe secțiuni CAEN.
+- Salariu mediu vs. media națională și vs. orașele benchmark.
+- Rată șomaj, populație activă.
+- Concluzie: ce tip de afacere se potrivește cu forța de muncă existentă (Galați: metalurgie, port, construcții navale, logistică).
+
+---
+
+## 8. Pipeline
 
 ```mermaid
 flowchart LR
-    A[Surse publice<br/>MF/ANAF, ONRC, INS] --> B[Colectare<br/>download + scraping/API]
-    B --> C[Staging<br/>date brute, imutabile]
-    C --> D[Curățare & normalizare<br/>CUI, CAEN, localitate, an]
-    D --> E[Validare<br/>reguli + cross-check]
-    E --> F[Indicatori<br/>profitabilitate, densitate, gap]
-    F --> G[Export<br/>CSV + JSON pentru API]
-    G --> H[Backend / Frontend]
-    E -.-> I[Raport QA<br/>anomalii, acoperire]
+    A[Surse oficiale] --> B[Colectare]
+    B --> C[date/raw<br/>imutabil]
+    C --> D[Curățare & normalizare]
+    D --> E[date/staging]
+    E --> F[Validare + cross-check]
+    F --> G[Indicatori]
+    G --> H[date/output<br/>CSV + JSON]
+    H --> I[Backend / Frontend]
+    F -.-> J[Raport QA]
 ```
 
-Principii:
-- **Datele brute nu se modifică niciodată** (folder `date/raw/`, read-only, cu data descărcării).
-- Orice transformare e **scriptată** (reproductibilă), nu manuală în Excel.
-- Fiecare fișier livrat are **sursă + dată + hash/versiune**.
+- `date/raw/` nu se modifică niciodată; se salvează cu data descărcării.
+- Orice transformare e scriptată și reproductibilă.
+- Fiecare livrabil are sursă + dată + versiune.
 
-## 8. Contract de date cu backend-ul
+---
 
-Format propus (de agreat cu echipa de backend):
+## 9. Contract de date cu backend
+
+Formatul pe care îl livrăm (orice schimbare se anunță în avans):
 
 ```json
 {
@@ -156,74 +204,70 @@ Format propus (de agreat cu echipa de backend):
 }
 ```
 
-Reguli pentru API:
-- chei în `snake_case`, numerice ca `number` (nu string), `null` pentru lipsă.
-- `cui` este **cheia primară** stabilă.
-- sumele în **RON**, fără separatori, fără rotunjiri ascunse.
-- un endpoint = un tabel normalizat; agregările se fac în backend.
-
-## 9. Structura folderului
-
-```
-Proiect/
-├── README.md
-├── date/
-│   ├── raw/          # descărcări brute, imutabile (git-ignored dacă e mare)
-│   ├── staging/      # date intermediare
-│   └── output/       # livrabile finale: CSV + JSON pentru API
-├── scripts/          # colectare, curățare, indicatori (Python)
-├── notebooks/        # explorare, grafice pentru raport
-├── documentatie/     # dicționar de date, surse, metodologie
-└── raport/           # materialul scris (capitole, grafice finale)
-```
-
-## 10. Convenții
-
-- **Encoding** UTF-8, diacritice românești corecte.
-- **CUI**: întreg, fără `RO`, fără spații; validare cu cifra de control.
-- **CAEN**: păstrăm codul din sursă (Rev.2/Rev.3) + un câmp `caen_versiune`; mapare explicită între revizii, nu presupunem echivalență.
-- **Localitate/județ**: normalizate la nomenclatorul INS (ex. `GALAȚI` → `Galați`).
-- **An fiscal**: 4 cifre; documentăm dacă anul e cel de raportare sau de exercițiu.
-- **Nume fișiere**: `sursa__continut__an__versiune.csv` (ex. `mfinante__bilant__2023__v1.csv`).
-- **Git**: commits mici, mesaje în română, fără date brute mari (>50 MB → releases/cloud intern).
-- **Nu** urcăm date cu caracter personal sau credențiale.
-
-## 11. Plan de lucru
-
-| Etapa | Ce facem | Livrabil |
-|---|---|---|
-| E1 | Validăm sursele, descărcăm primele fișiere, definim schema | `documentatie/surse.md`, mostre raw |
-| E2 | Curățare + normalizare CUI/CAEN/localitate | `date/staging/` + raport de acoperire |
-| E3 | Indicatori profitabilitate + topuri | `date/output/top_firme.csv` |
-| E4 | Date INS (muncă, populație) + benchmark orașe | `date/output/indicatori_locali.csv` |
-| E5 | Gap analysis + scor de oportunitate | `date/output/gap_galati.json` |
-| E6 | Grafice + text pentru raport, predare către backend/QA | `raport/`, contract de date final |
-
-## 12. Riscuri și mitigare
-
-| Risc | Impact | Mitigare |
-|---|---|---|
-| Fișierele ANAF/MF au formate instabile de la an la an | Colectare întârziată | Parser versionat per an, testat pe 2 ani |
-| CAEN Rev.2 vs Rev.3 | Comparații greșite | Tabel de mapare explicit + câmp de versiune |
-| Date lipsă (firme fără bilanț) | Topuri distorsionate | Raport de acoperire, marcare `null`, fără imputare artificială |
-| Suprapunere cu backend pe „cine calculează agregările” | Confuzie | Contract de date (secțiunea 8) + un singur loc de calcul |
-| Scraping blocat / rate-limit | Colectare incompletă | Preferăm bulk/API oficial, cache local, backoff |
-
-## 13. Definition of Done (pentru echipa noastră)
-
-- [ ] Sursele sunt documentate cu URL, licență, dată descărcare.
-- [ ] Scripturile rulează cap-coadă cu o singură comandă, pe un folder curat.
-- [ ] Fișierele din `date/output/` respectă contractul de date.
-- [ ] Există dicționar de date (fiecare coloană explicată).
-- [ ] QA poate verifica 5 firme de top manual, din sursa primară.
-- [ ] Raportul de acoperire arată câte firme au date complete pe fiecare an.
-- [ ] Graficele din raport se regenerează din `date/output/`.
+Reguli: `snake_case`; numere ca `number`, lipsă = `null`; `cui` = cheie primară; sume în **RON**; un endpoint = un tabel normalizat; agregările se calculează o singură dată (la noi sau la ei — de stabilit).
 
 ---
 
-## Contact & colaborare
+## 10. Convenții de lucru
 
-- **Echipa:** Data Analysis — T, A, E, F, R (5 membri)
-- **Interfață cu backend:** contract de date (secțiunea 8) — orice schimbare se anunță în avans.
-- **Interfață cu QA:** livrăm `date/output/` + raport de acoperire + dicționar de date.
-- **Interfață cu Marketing:** livrăm 5–10 concluzii-cheie cu cifre verificabile, nu interpretări.
+- **Encoding** UTF-8, diacritice românești corecte.
+- **CUI**: întreg, fără `RO`, fără spații, validat cu cifra de control.
+- **CAEN**: păstrăm codul din sursă + câmp `caen_versiune`; mapare explicită Rev.2 → Rev.3, fără presupuneri.
+- **Localitate/județ**: normalizate la nomenclatorul INS.
+- **An fiscal**: 4 cifre; documentăm dacă e an de raportare sau de exercițiu.
+- **Nume fișiere**: `sursa__continut__an__versiune.csv`.
+- **Fără date personale** și fără credențiale în repo.
+
+---
+
+## 11. Structura folderelor noastre
+
+```
+date/
+├── raw/          # descărcări brute, imutabile (git-ignored)
+├── staging/      # date intermediare (git-ignored)
+└── output/       # livrabile finale: CSV + JSON (în git)
+scripts/          # colectare, curățare, indicatori
+notebooks/        # explorare, grafice
+documentatie/     # acest fișier, surse.md, dicționar de date
+raport/           # materialul scris
+```
+
+---
+
+## 12. Board de etape
+
+| Etapa | Ce facem | Owner | Status |
+|---|---|---|---|
+| E1 | Validare surse, descărcare eșantion, definire schemă | _de completat_ | ⬜ |
+| E2 | Curățare + normalizare CUI/CAEN/localitate | _de completat_ | ⬜ |
+| E3 | Indicatori profitabilitate + topuri | _de completat_ | ⬜ |
+| E4 | Date INS + benchmark orașe | _de completat_ | ⬜ |
+| E5 | Gap analysis + scor de oportunitate | _de completat_ | ⬜ |
+| E6 | Grafice, text raport, predare backend/QA | _de completat_ | ⬜ |
+
+Legendă: ⬜ de început · 🟡 în lucru · ✅ gata · ⛔ blocat
+
+---
+
+## 13. Riscuri sub controlul nostru
+
+| Risc | Mitigare |
+|---|---|
+| Formate MF/ANAF instabile între ani | parser versionat per an, testat pe 2 ani |
+| CAEN Rev.2 vs Rev.3 | tabel de mapare explicit + câmp de versiune |
+| Firme fără bilanț → topuri distorsionate | raport de acoperire, `null` în loc de zero |
+| Suprapunere cu backend pe agregări | contract de date + un singur loc de calcul |
+| Scraping blocat / rate-limit | preferăm bulk/API oficial, cache local, backoff |
+
+---
+
+## 14. Definition of Done
+
+- [ ] Sursele documentate cu URL, licență, dată descărcare.
+- [ ] Scripturile rulează cap-coadă pe un folder curat.
+- [ ] `date/output/` respectă contractul de date.
+- [ ] Dicționar de date complet.
+- [ ] QA poate verifica manual 5 firme de top din sursa primară.
+- [ ] Raport de acoperire pe fiecare an.
+- [ ] Graficele din raport se regenerează din `date/output/`.
